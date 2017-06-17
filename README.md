@@ -9,7 +9,7 @@ To Run the Client: Give the host address and port number of the server as argume
 Step 1: Compile ChatServer.java and ChatClient.java using javac command  
 Step 2: Run the server on server computer using the format: 
 ```
-java ChatServer \<port-number\>  
+java ChatServer <port-number>  
 ```
 Step 3: Run the client using command: 
 ```
