@@ -13,7 +13,7 @@ java ChatServer <port-number>
 ```
 Step 3: Run the client using command: 
 ```
-java ChatClient <host-address> <port-number> 
+java ChatClient <host-address> <port-number> <thread-name>
 ```
   
 >PS: To Run both client and server on same machine, host would be the localhost (generally 127.0.0.1) and use port number of your choice
