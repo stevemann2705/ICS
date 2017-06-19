@@ -10,8 +10,8 @@ public class ChatClient extends Frame implements Runnable {
 	protected TextArea output;
 	protected TextField input;
 	protected Thread listener;
-
-	public ChatClient(String title, InputStream i, OutputStream o) {
+	
+	public ChatClient(String title, InputStream i, OutputStream o, String threadName) {
 		super(title);
 		this.i = new DataInputStream(new BufferedInputStream(i));
 		this.o = new DataOutputStream(new BufferedOutputStream(o));
@@ -23,14 +23,17 @@ public class ChatClient extends Frame implements Runnable {
 		show();
 		input.requestFocus();
 		listener = new Thread(this);
+		listener.setName(threadName);
 		listener.start();
+		//System.out.println(Thread.currentThread().getName());
 	}
 
 	public void run() {
 		try {
 			while (true) {
 				String line = i.readUTF();
-				output.appendText(line + "\n");
+				output.appendText(listener.getName() + ">" + line + "\n");
+				
 			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -67,9 +70,9 @@ public class ChatClient extends Frame implements Runnable {
 	}
 
 	public static void main(String args[]) throws IOException {
-		if (args.length != 2)
-			throw new RuntimeException("Syntax: ChatClient <host> <port>");
+		if (args.length != 3)
+			throw new RuntimeException("Syntax: ChatClient <host> <port> <id>");
 		Socket s = new Socket(args[0], Integer.parseInt(args[1]));
-		new ChatClient("Chat " + args[0] + ":" + args[1], s.getInputStream(), s.getOutputStream());
+		new ChatClient("Chat " + args[0] + ":" + args[1]+ ":" + args[2], s.getInputStream(), s.getOutputStream(), args[2]);
 	}
 }
